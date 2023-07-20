@@ -1,36 +1,33 @@
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-const Register = () => {
-  const navigate = useNavigate();
-  const [inputs, setinputs] = useState({
+import React, { useState } from "react";
+import { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext.jsx";
+
+const Login = () => {
+  const [inputs, setInputs] = useState({
     username: "",
     password: "",
   });
-  const [err, seterr] = useState(null);
+  const [err, setError] = useState(null);
 
-  const handlechange = (e) => {
-    setinputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
+  const navigate = useNavigate();
 
-  const handlesubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await axios.post(
-        "http://localhost:5175/api/auth/login",
-        inputs,
-        {
-          withCredentials: true,
-        }
-      );
-      console.log(res);
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-      seterr(err.response.data);
-    }
+  const { login } = useContext(AuthContext);
+
+  const handleChange = (e) => {
+    setInputs((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   console.log(inputs);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await login(inputs);
+      navigate("/");
+    } catch (err) {
+      setError(err.response.data);
+    }
+  };
   return (
     <div className="auth">
       <h1>Login</h1>
@@ -39,25 +36,24 @@ const Register = () => {
           required
           type="text"
           placeholder="username"
-          onChange={handlechange}
           name="username"
+          onChange={handleChange}
         />
         <input
           required
           type="password"
           placeholder="password"
-          onChange={handlechange}
           name="password"
+          onChange={handleChange}
         />
-
-        <button onClick={handlesubmit}>Register</button>
+        <button onClick={handleSubmit}>Login</button>
         {err && <p>{err}</p>}
         <span>
-          Don't have an account? <Link to="/register">Register</Link>
+          Don't you have an account? <Link to="/register">Register</Link>
         </span>
       </form>
     </div>
   );
 };
 
-export default Register;
+export default Login;
