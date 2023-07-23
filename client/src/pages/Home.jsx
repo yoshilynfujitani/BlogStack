@@ -5,13 +5,13 @@ import { Link, useLocation } from "react-router-dom";
 const Home = () => {
   const [posts, setPosts] = useState([]);
 
-  const category = useLocation().search;
+  const cat = useLocation().search;
 
   useEffect(() => {
     const fetchdata = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5175/api/posts${category}`
+          `http://localhost:5175/api/posts${cat}`
         );
         setPosts(res.data);
       } catch (err) {
@@ -19,7 +19,9 @@ const Home = () => {
       }
     };
     fetchdata();
-  }, []);
+  }, [cat]);
+
+
   return (
     <div className="home">
       <div className="posts">
@@ -34,6 +36,7 @@ const Home = () => {
                 <h1>{post.title}</h1>
               </Link>
               {/* <p>{getText(post.desc)}</p> */}
+              <p>{post.desc}</p>
               <button>Read More</button>
             </div>
           </div>
