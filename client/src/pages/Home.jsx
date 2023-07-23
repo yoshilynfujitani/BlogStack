@@ -11,7 +11,7 @@ const Home = () => {
     const fetchdata = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5175/api/posts${cat}`
+          `http://127.0.0.1:5175/api/posts${cat}`
         );
         setPosts(res.data);
       } catch (err) {
@@ -30,7 +30,7 @@ const Home = () => {
             <div className="img">
               <img src={post.img} alt="" />
             </div>
-            {console.log(post.img)}
+
             <div className="content">
               <Link className="link" to={`/post/${post.id}`}>
                 <h1>{post.title}</h1>

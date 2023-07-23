@@ -17,7 +17,7 @@ const Single = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://localhost:5175/api/posts/${postId}`);
+        const res = await axios.get(`http://127.0.0.1:5175/api/posts/${postId}`);
         setPost(res.data);
       } catch (err) {
         console.log(err);
@@ -25,6 +25,15 @@ const Single = () => {
     };
     fetchData();
   }, [postId]);
+
+  const handledelete = async () => {
+    try {
+      await axios.delete(`http://127.0.0.1:5175/api/posts/${postId}`)
+      navigate("/")
+    } catch (err) {
+      console.log(err)
+    }
+  }
 
   console.log(post)
 
@@ -41,13 +50,13 @@ const Single = () => {
           <p>Posted {moment(post.date).fromNow()}</p>
         </div>
         {currentUser.username === post.username && (
-          <h1>User</h1>
-          // <div className="edit">
-          //   <Link to={`/write?edit=2`} state={post}>
-          //     <img src={Edit} alt="" />
-          //   </Link>
-          //   <img onClick={handleDelete} src={Delete} alt="" />
-          // </div>
+
+          <div className="edit">
+            <Link to={`/write?edit=2`} state={post}>
+              <button>Edit</button>
+            </Link>
+            <button onClick={handledelete}>Delete</button>
+          </div>
         )}
       </div>
       <h1>{post.title}</h1>

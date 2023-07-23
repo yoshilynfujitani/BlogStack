@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 const app = express();
 app.use(
   cors({
-    origin: "http://localhost:5173", // Replace this with the URL of your frontend
+    origin: "http://127.0.0.1:5173", // Replace this with the URL of your frontend
     credentials: true, // Allow credentials (cookies) to be sent by the frontend
   })
 );
