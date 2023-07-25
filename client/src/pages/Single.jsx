@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import moment from "moment";
+import Menu from "../components/Menu";
 
 const Single = () => {
   const [post, setPost] = useState({});
@@ -28,7 +29,9 @@ const Single = () => {
 
   const handledelete = async () => {
     try {
-      await axios.delete(`http://127.0.0.1:5175/api/posts/${postId}`)
+      await axios.delete(`http://127.0.0.1:5175/api/posts/${postId}`, {
+        withCredentials: true
+      })
       navigate("/")
     } catch (err) {
       console.log(err)
@@ -67,8 +70,10 @@ const Single = () => {
         }}
       ></p>     */}
     </div>
-    {/* <Menu cat={post.cat} /> */}
-  </div>);
+    <Menu cat={post.category} />
+  </div>
+  )
+    ;
 };
 
 export default Single;
