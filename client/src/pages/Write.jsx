@@ -12,15 +12,19 @@ const Write = () => {
   const [file, setFile] = useState(null);
   const [category, setCat] = useState(state?.category || "");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const upload = async () => {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      const res = await axios.post("http://127.0.0.1:5175/api/upload", formData, {
-        withCredentials: true
-      });
+      const res = await axios.post(
+        "http://localhost:5175/api/upload",
+        formData,
+        {
+          withCredentials: true,
+        }
+      );
       return res.data;
     } catch (err) {
       console.log(err);
@@ -33,25 +37,32 @@ const Write = () => {
 
     try {
       state
-        ? await axios.put(`http://127.0.0.1:5175/api/posts/${state.id}`, {
-
-          title,
-          desc: value,
-          category,
-          img: file ? imgUrl : "",
-        }, {
-          withCredentials: true
-        })
-        : await axios.post(`http://127.0.0.1:5175/api/posts/`, {
-          title,
-          desc: value,
-          category,
-          img: file ? imgUrl : "",
-          date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
-        }, {
-          withCredentials: true
-        });
-      navigate("/")
+        ? await axios.put(
+            `http://localhost:5175/api/posts/${state.id}`,
+            {
+              title,
+              desc: value,
+              category,
+              img: file ? imgUrl : "",
+            },
+            {
+              withCredentials: true,
+            }
+          )
+        : await axios.post(
+            `http://localhost:5175/api/posts/`,
+            {
+              title,
+              desc: value,
+              category,
+              img: file ? imgUrl : "",
+              date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
+            },
+            {
+              withCredentials: true,
+            }
+          );
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

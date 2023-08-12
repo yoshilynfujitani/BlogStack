@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import moment from "moment";
 import Menu from "../components/Menu";
-import DOMPurify from "dompurify"
+import DOMPurify from "dompurify";
 
 const Single = () => {
   const [post, setPost] = useState({});
@@ -19,7 +19,9 @@ const Single = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`http://127.0.0.1:5175/api/posts/${postId}`);
+        const res = await axios.get(
+          `http://localhost:5175/api/posts/${postId}`
+        );
         setPost(res.data);
       } catch (err) {
         console.log(err);
@@ -30,48 +32,44 @@ const Single = () => {
 
   const handledelete = async () => {
     try {
-      await axios.delete(`http://127.0.0.1:5175/api/posts/${postId}`, {
-        withCredentials: true
-      })
-      navigate("/")
+      await axios.delete(`http://localhost:5175/api/posts/${postId}`, {
+        withCredentials: true,
+      });
+      navigate("/");
     } catch (err) {
-      console.log(err)
+      console.log(err);
     }
-  }
-  const value = post.desc
+  };
+  const value = post.desc;
 
-  console.log(post)
+  console.log(post);
 
-  return (<div className="single">
-    <div className="content">
-      <img src={`./upload/${post?.img}`} alt="" />
-      <div className="user">
-        {post.userImg && <img
-          src={post.userImg}
-          alt=""
-        />}
-        <div className="info">
-          <span>{post.username}</span>
-          <p>Posted {moment(post.date).fromNow()}</p>
-        </div>
-        {currentUser?.username === post.username && (
-
-          <div className="edit">
-            <Link to={`/write?edit=2`} state={post}>
-              <button>Edit</button>
-            </Link>
-            <button onClick={handledelete}>Delete</button>
+  return (
+    <div className="single">
+      <div className="content">
+        <img src={`./upload/${post?.img}`} alt="" />
+        <div className="user">
+          {post.userImg && <img src={post.userImg} alt="" />}
+          <div className="info">
+            <span>{post.username}</span>
+            <p>Posted {moment(post.date).fromNow()}</p>
           </div>
-        )}
-      </div>
-      <h1>{post.title}</h1>
+          {currentUser?.username === post.username && (
+            <div className="edit">
+              <Link to={`/write?edit=2`} state={post}>
+                <button>Edit</button>
+              </Link>
+              <button onClick={handledelete}>Delete</button>
+            </div>
+          )}
+        </div>
+        <h1>{post.title}</h1>
 
-      <div dangerouslySetInnerHTML={{ __html: value }} />
+        <div dangerouslySetInnerHTML={{ __html: value }} />
+      </div>
+      <Menu category={post.category} />
     </div>
-    <Menu category={post.category} />
-  </div>
-  )
-    ;
+  );
 };
 
 export default Single;

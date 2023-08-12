@@ -1,8 +1,6 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 
-
-
 export const AuthContext = createContext();
 
 export const AuthContexProvider = ({ children }) => {
@@ -11,19 +9,26 @@ export const AuthContexProvider = ({ children }) => {
   );
 
   const login = async (inputs) => {
-    const res = await axios.post("http://127.0.0.1:5175/api/auth/login", inputs, {
-      withCredentials: true
-    });
+    const res = await axios.post(
+      "http://localhost:5175/api/auth/login",
+      inputs,
+      {
+        withCredentials: true,
+      }
+    );
     setCurrentUser(res.data);
   };
 
   const logout = async () => {
-    await axios.post("http://127.0.0.1:5175/api/auth/logout", {}, {
-      withCredentials: true
-    });
+    await axios.post(
+      "http://localhost:5175/api/auth/logout",
+      {},
+      {
+        withCredentials: true,
+      }
+    );
 
     setCurrentUser(null);
-
   };
 
   useEffect(() => {

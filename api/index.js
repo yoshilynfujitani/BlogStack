@@ -4,7 +4,7 @@ import userRoutes from "./routes/users.js";
 import postRoutes from "./routes/posts.js";
 import cookieParser from "cookie-parser";
 import multer from "multer";
-import cors from "cors"
+import cors from "cors";
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://127.0.0.1:5173", // Replace this with the URL of your frontend
+    origin: "http://localhost:5173", // Replace this with the URL of your frontend
     credentials: true, // Allow credentials (cookies) to be sent by the frontend
   })
 );

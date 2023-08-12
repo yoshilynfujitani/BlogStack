@@ -1,7 +1,6 @@
 import { db } from "../db.js";
 import jwt from "jsonwebtoken";
 
-
 export const getPosts = (req, res) => {
   const q = req.query.cat
     ? "SELECT * FROM posts WHERE category=?"
@@ -53,7 +52,7 @@ export const addPost = (req, res) => {
 
 export const deletePost = (req, res) => {
   const token = req.cookies.access_token;
-  console.log(token)
+  console.log(token);
   if (!token) return res.status(401).json("Not authenticated!");
 
   jwt.verify(token, "jwtkey", (err, userInfo) => {
@@ -81,7 +80,12 @@ export const updatePost = (req, res) => {
     const q =
       "UPDATE posts SET `title`=?,`desc`=?,`img`=?,`category`=? WHERE `id` = ? AND `uid` = ?";
 
-    const values = [req.body.title, req.body.desc, req.body.img, req.body.category];
+    const values = [
+      req.body.title,
+      req.body.desc,
+      req.body.img,
+      req.body.category,
+    ];
 
     db.query(q, [...values, postId, userInfo.id], (err, data) => {
       if (err) return res.status(500).json(err);

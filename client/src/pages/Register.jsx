@@ -19,9 +19,10 @@ const Register = () => {
     try {
       const res = await axios.post(
         "http://localhost:5175/api/auth/register",
-        inputs, {
-        withCredentials: true
-      }
+        inputs,
+        {
+          withCredentials: true,
+        }
       );
       console.log(res);
       navigate("/login");
