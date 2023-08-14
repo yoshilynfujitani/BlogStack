@@ -100,21 +100,22 @@ const Navbar = () => {
                 </Link>
               )}
             </div>
-            {/* Write */}
-            <div className="flex items-center gap-2 my-1">
-              <TfiWrite />
-              <span className="font-semibold">
-                <Link className="link" to="/write">
-                  Write
-                </Link>
-              </span>
-            </div>
+            {currentUser && (
+              <div className="flex items-center gap-2 my-1">
+                <TfiWrite />
+                <span className="font-semibold">
+                  <Link className="link" to="/write">
+                    Write
+                  </Link>
+                </span>
+              </div>
+            )}
           </div>
         ) : (
           ""
         )}
         {/* Desktop */}
-        <div className="hidden md:flex md:gap-5">
+        <div className="hidden md:flex md:gap-5 md:items-center">
           <Link className={link} to="/?cat=art">
             <h6 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text">
               ART
@@ -154,11 +155,16 @@ const Navbar = () => {
             </Link>
           )}
 
-          <span className="write">
-            <Link className="link" to="/write">
-              Write
-            </Link>
-          </span>
+          {currentUser && (
+            <div className="flex items-center gap-2 my-1">
+              <TfiWrite />
+              <span className="font-semibold">
+                <Link className="link" to="/write">
+                  Write
+                </Link>
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

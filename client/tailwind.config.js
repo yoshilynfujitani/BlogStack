@@ -6,6 +6,9 @@ export default {
       container: {
         center: true,
       },
+      backgroundImage: {
+        "login-bg": "url('/assets/login-bg.jpg')",
+      },
     },
   },
   plugins: [],
