@@ -20,21 +20,26 @@ const Home = () => {
   }, [cat]);
 
   return (
-    <div className="home">
-      <div className="posts">
+    <div className="container">
+      <div className="max-w-screen">
         {posts.map((post) => (
-          <div className="post" key={post.id}>
-            <div className="img">
+          <div className="flex flex-col md:flex-row" key={post.id}>
+            <div className="w-96 min-h-[100px] max-h-[500px]">
               <img src={`./upload/${post.img}`} alt="" />
             </div>
 
             <div className="content">
-              <Link className="link" to={`/post/${post.id}`}>
-                <h1>{post.title}</h1>
-              </Link>
+              <h1>{post.title}</h1>
+
               {/* <p>{getText(post.desc)}</p> */}
-              <div dangerouslySetInnerHTML={{ __html: post.desc }} />
-              <button>Read More</button>
+              <div
+                className="max-w-[200px] truncate "
+                dangerouslySetInnerHTML={{ __html: post.desc }}
+              />
+
+              <Link className="link" to={`/post/${post.id}`}>
+                <button>Read More</button>
+              </Link>
             </div>
           </div>
         ))}

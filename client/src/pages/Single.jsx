@@ -4,7 +4,6 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import moment from "moment";
 import Menu from "../components/Menu";
-import DOMPurify from "dompurify";
 
 const Single = () => {
   const [post, setPost] = useState({});
@@ -42,30 +41,51 @@ const Single = () => {
   };
   const value = post.desc;
 
-  console.log(post);
+  console.log(post.img);
 
   return (
-    <div className="single">
+    <div className="container">
       <div className="content">
-        <img src={`./upload/${post?.img}`} alt="" />
-        <div className="user">
+        <img
+          src={`/upload/${post.img}`}
+          alt=""
+          className="md:max-h-[500px] md:rounded-lg "
+        />
+        <div className="p-5 md:px-24">
           {post.userImg && <img src={post.userImg} alt="" />}
+          <h1 className="text-2xl font-bold md:text-4xl">{post.title}</h1>
           <div className="info">
-            <span>{post.username}</span>
-            <p>Posted {moment(post.date).fromNow()}</p>
+            <h1 className="text-gray-400 font-semibold text-lg md:text-xl">
+              Written by{" "}
+              <span className="bg-gradient-to-r from-cyan-500 to-blue-500 text-transparent bg-clip-text">
+                {post.username}
+              </span>
+            </h1>
+            <p className="italic text-sm">
+              Posted {moment(post.date).fromNow()}
+            </p>
           </div>
           {currentUser?.username === post.username && (
-            <div className="edit">
+            <div className="space-x-2 my-2">
               <Link to={`/write?edit=2`} state={post}>
-                <button>Edit</button>
+                <button className="bg-yellow-400 px-2 py-1 text-white rounded-md font-semibold ">
+                  Edit
+                </button>
               </Link>
-              <button onClick={handledelete}>Delete</button>
+              <button
+                className="bg-red-400 px-2 py-1 text-white rounded-md font-semibold "
+                onClick={handledelete}
+              >
+                Delete
+              </button>
             </div>
           )}
         </div>
-        <h1>{post.title}</h1>
 
-        <div dangerouslySetInnerHTML={{ __html: value }} />
+        <div
+          className="px-5 md:px-24"
+          dangerouslySetInnerHTML={{ __html: value }}
+        />
       </div>
       <Menu category={post.category} />
     </div>
