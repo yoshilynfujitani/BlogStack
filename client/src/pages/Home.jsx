@@ -26,22 +26,24 @@ const Home = () => {
           Latest blogs around the world
         </h1>
         {posts.map((post) => (
-          <div className="flex flex-col md:flex-row" key={post.id}>
-            <div className="w-full min-h-[100px] max-h-[500px]">
+          <div className="flex flex-col gap-5 my-5 md:flex-row" key={post.id}>
+            <div className="max-w-[600px]">
               <img src={`./upload/${post.img}`} alt="" className="rounded-sm" />
             </div>
 
             <div className="content">
-              <h1>{post.title}</h1>
+              <h1 className="font-semibold text-xl py-2">{post.title}</h1>
 
               {/* <p>{getText(post.desc)}</p> */}
               <h1
-                className="max-h-[20px] truncate "
+                className="line-clamp-3 md:line-clamp-6 text-gray-700 "
                 dangerouslySetInnerHTML={{ __html: post.desc }}
               />
 
               <Link className="link" to={`/post/${post.id}`}>
-                <button>Read More</button>
+                <button className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold px-2 py-1 rounded-md my-2">
+                  Read More
+                </button>
               </Link>
             </div>
           </div>

@@ -45,11 +45,11 @@ const Single = () => {
 
   return (
     <div className="container">
-      <div className="content">
+      <div className="">
         <img
           src={`/upload/${post.img}`}
           alt=""
-          className="md:max-h-[500px] md:rounded-lg "
+          className="md:max-h-[500px] md:rounded-lg  bg-cover md:px-24 "
         />
         <div className="p-5 md:px-24">
           {post.userImg && <img src={post.userImg} alt="" />}
