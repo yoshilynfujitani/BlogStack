@@ -21,19 +21,22 @@ const Home = () => {
 
   return (
     <div className="container">
-      <div className="max-w-screen">
+      <div className="max-w-screen px-5">
+        <h1 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent text-2xl font-bold">
+          Latest blogs around the world
+        </h1>
         {posts.map((post) => (
           <div className="flex flex-col md:flex-row" key={post.id}>
-            <div className="w-96 min-h-[100px] max-h-[500px]">
-              <img src={`./upload/${post.img}`} alt="" />
+            <div className="w-full min-h-[100px] max-h-[500px]">
+              <img src={`./upload/${post.img}`} alt="" className="rounded-sm" />
             </div>
 
             <div className="content">
               <h1>{post.title}</h1>
 
               {/* <p>{getText(post.desc)}</p> */}
-              <div
-                className="max-w-[200px] truncate "
+              <h1
+                className="max-h-[20px] truncate "
                 dangerouslySetInnerHTML={{ __html: post.desc }}
               />
 
