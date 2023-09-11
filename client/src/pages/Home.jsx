@@ -1,23 +1,29 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { usePosts } from "./usePosts";
+import Spinner from "../components/Spinner";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useState([]);
 
-  const cat = useLocation().search;
+  // const cat = useLocation().search;
 
-  useEffect(() => {
-    const fetchdata = async () => {
-      try {
-        const res = await axios.get(`http://localhost:5175/api/posts${cat}`);
-        setPosts(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchdata();
-  }, [cat]);
+  // useEffect(() => {
+  //   const fetchdata = async () => {
+  //     try {
+  //       const res = await axios.get(`http://localhost:5175/api/posts${cat}`);
+  //       setPosts(res.data);
+  //     } catch (err) {
+  //       console.log(err.response.data);
+  //     }
+  //   };
+  //   fetchdata();
+  // }, [cat]);
+
+  const { isLoading, Posts } = usePosts();
+
+  if (isLoading) return <Spinner />;
 
   return (
     <div className="container">
@@ -25,7 +31,7 @@ const Home = () => {
         <h1 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent text-2xl font-bold">
           Latest blogs around the world
         </h1>
-        {posts.map((post) => (
+        {Posts.map((post) => (
           <div className="flex flex-col gap-5 my-5 md:flex-row" key={post.id}>
             <div className="max-w-[600px]">
               <img src={`./upload/${post.img}`} alt="" className="rounded-sm" />

@@ -12,6 +12,7 @@ import Write from "./pages/Write";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import "./index.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const Layout = () => {
   return (
@@ -51,11 +52,21 @@ const router = createBrowserRouter([
     element: <Login />,
   },
 ]);
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 0,
+    },
+  },
+});
 function App() {
   return (
     <div className="">
       <div className="">
-        <RouterProvider router={router} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
       </div>
     </div>
   );

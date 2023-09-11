@@ -1,47 +1,33 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 import moment from "moment";
 import Menu from "../components/Menu";
+import { getPost } from "./apiPosts";
+import { usePost } from "./usePost";
+import Spinner from "../components/Spinner";
+import { useDeletePost } from "./useDeletePost";
 
 const Single = () => {
-  const [post, setPost] = useState({});
-
   const location = useLocation();
   const navigate = useNavigate();
 
-  const postId = location.pathname.split("/")[2];
+  // const postId = location.pathname.split("/")[2];
+  const { id } = useParams();
 
   const { currentUser } = useContext(AuthContext);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:5175/api/posts/${postId}`
-        );
-        setPost(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchData();
-  }, [postId]);
+  const { isLoading, post } = usePost();
+  const { isDeleting, deletePost } = useDeletePost();
+  if (isLoading) return <Spinner />;
+  console.log(post.id);
 
-  const handledelete = async () => {
-    try {
-      await axios.delete(`http://localhost:5175/api/posts/${postId}`, {
-        withCredentials: true,
-      });
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
+  const handledelete = (id) => {
+    deletePost(id);
+    navigate("/");
   };
   const value = post.desc;
-
-  console.log(post.img);
 
   return (
     <div className="container">
@@ -74,7 +60,8 @@ const Single = () => {
               </Link>
               <button
                 className="bg-red-400 px-2 py-1 text-white rounded-md font-semibold "
-                onClick={handledelete}
+                onClick={() => handledelete(post.id)}
+                disabled={isDeleting}
               >
                 Delete
               </button>
