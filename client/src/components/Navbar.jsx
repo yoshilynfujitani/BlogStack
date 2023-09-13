@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 
 import { CgMenuGridO } from "react-icons/cg";
@@ -11,6 +11,13 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const link = `transition text-md font-semibold hover:text-transparent flex items-center `;
+
+  let [searchParams, setSearchParams] = useSearchParams();
+
+  function handleCategory(event) {
+    searchParams.set("category", event);
+    setSearchParams(searchParams);
+  }
 
   return (
     <div className="navbar p-5 mb-5 shadow-md">
@@ -35,7 +42,7 @@ const Navbar = () => {
         {isOpen ? (
           <div className="absolute right-0 mx-5 top-16 bg-slate-50 rounded-md p-4">
             {" "}
-            <Link className={link} to="/?cat=art">
+            <Link className={link} onClick={() => handleCategory("art")}>
               <h6
                 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text"
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
@@ -43,7 +50,7 @@ const Navbar = () => {
                 ART
               </h6>
             </Link>
-            <Link className={link} to="/?cat=science">
+            <Link className={link} onClick={() => handleCategory("science")}>
               <h6
                 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text"
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
@@ -51,7 +58,7 @@ const Navbar = () => {
                 SCIENCE
               </h6>
             </Link>
-            <Link className={link} to="/?cat=technology">
+            <Link className={link} onClick={() => handleCategory("technology")}>
               <h6
                 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text"
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
@@ -59,7 +66,7 @@ const Navbar = () => {
                 TECHNOLOGY
               </h6>
             </Link>
-            <Link className={link} to="/?cat=cinema">
+            <Link className={link} onClick={() => handleCategory("cinema")}>
               <h6
                 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text"
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
@@ -67,7 +74,7 @@ const Navbar = () => {
                 CINEMA
               </h6>
             </Link>
-            <Link className={link} to="/?cat=design">
+            <Link className={link} onClick={() => handleCategory("design")}>
               <h6
                 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text"
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
@@ -75,7 +82,7 @@ const Navbar = () => {
                 DESIGN
               </h6>
             </Link>
-            <Link className={link} to="/?cat=food">
+            <Link className={link} onClick={() => handleCategory("food")}>
               <h6
                 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text"
                 onClick={() => setIsOpen((isOpen) => !isOpen)}
@@ -116,32 +123,32 @@ const Navbar = () => {
         )}
         {/* Desktop */}
         <div className="hidden md:flex md:gap-5 md:items-center">
-          <Link className={link} to="/?cat=art">
+          <Link className={link} onClick={() => handleCategory("art")}>
             <h6 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text">
               ART
             </h6>
           </Link>
-          <Link className={link} to="/?cat=science">
+          <Link className={link} onClick={() => handleCategory("science")}>
             <h6 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text">
               SCIENCE
             </h6>
           </Link>
-          <Link className={link} to="/?cat=technology">
+          <Link className={link} onClick={() => handleCategory("technology")}>
             <h6 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text">
               TECHNOLOGY
             </h6>
           </Link>
-          <Link className={link} to="/?cat=cinema">
+          <Link className={link} onClick={() => handleCategory("cinema")}>
             <h6 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text">
               CINEMA
             </h6>
           </Link>
-          <Link className={link} to="/?cat=design">
+          <Link className={link} onClick={() => handleCategory("design")}>
             <h6 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text">
               DESIGN
             </h6>
           </Link>
-          <Link className={link} to="/?cat=food">
+          <Link className={link} onClick={() => handleCategory("food")}>
             <h6 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text">
               FOOD
             </h6>

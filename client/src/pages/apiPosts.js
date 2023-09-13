@@ -11,6 +11,12 @@ export async function getPosts() {
   }
 
   return data;
+
+  // }
+  // console.log(data);
+  // const filteredData = data.filter((post) => post.category === category);
+
+  // return filteredData;
 }
 
 export async function getPost(id) {
