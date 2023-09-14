@@ -1,18 +1,23 @@
 import { db } from "../db.js";
 import jwt from "jsonwebtoken";
 
-export const getPostsCategory = (req, res) => {
-  const q = "SELECT * FROM posts WHERE category = ?";
+// export const getPostsCategory = (req, res) => {
+//   const q = "SELECT * FROM posts WHERE category = ?";
 
-  db.query(q, [req.params.category], (err, data) => {
-    if (err) return res.status(500).send(err);
+//   db.query(q, [req.params.category], (err, data) => {
+//     if (err) return res.status(500).send(err);
 
-    return res.status(200).json(data);
-  });
-};
+//     return res.status(200).json(data);
+//   });
+// };
 
 export const getPosts = (req, res) => {
-  const q = "SELECT * FROM posts";
+  const page = req.query.page || 1; // Get the requested page from the query parameters
+  const itemsPerPage = 5; // Set the number of items to display per page
+  // Calculate the offset based on the requested page and items per page
+  const offset = (page - 1) * itemsPerPage;
+  //
+  const q = `SELECT * FROM posts LIMIT ${itemsPerPage} OFFSET ${offset}`;
 
   db.query(q, (err, data) => {
     if (err) return res.status(500).send(err);

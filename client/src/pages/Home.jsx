@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { usePosts } from "./usePosts";
 import Spinner from "../components/Spinner";
+import Pagination from "../components/Pagination";
 
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -66,6 +67,7 @@ const Home = () => {
           </div>
         ))}
       </div>
+      <Pagination />
     </div>
   );
 };

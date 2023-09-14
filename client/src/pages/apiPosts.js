@@ -1,10 +1,10 @@
 import axios from "axios";
 
-export async function getPosts() {
+export async function getPosts(page) {
   let data;
 
   try {
-    const res = await axios.get(`http://localhost:5175/api/posts`);
+    const res = await axios.get(`http://localhost:5175/api/posts?page=${page}`);
     data = res.data;
   } catch (err) {
     console.log(err.response.data);
