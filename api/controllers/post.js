@@ -12,17 +12,41 @@ import jwt from "jsonwebtoken";
 // };
 
 export const getPosts = (req, res) => {
-  const page = req.query.page || 1; // Get the requested page from the query parameters
+  const page = Number(req.query.page) || 1; // Get the requested page from the query parameters
   const itemsPerPage = 5; // Set the number of items to display per page
   // Calculate the offset based on the requested page and items per page
   const offset = (page - 1) * itemsPerPage;
-  //
-  const q = `SELECT * FROM posts LIMIT ${itemsPerPage} OFFSET ${offset}`;
 
-  db.query(q, (err, data) => {
-    if (err) return res.status(500).send(err);
+  const category = req.query.category || null; // Get the category from the query parameters
 
-    return res.status(200).json(data);
+  // Construct a count query to get the total number of rows
+  const countQuery = category
+    ? "SELECT COUNT(*) AS totalCount FROM posts WHERE category=?"
+    : "SELECT COUNT(*) AS totalCount FROM posts";
+
+  const queryParams = category ? [category] : [];
+
+  db.query(countQuery, queryParams, (countErr, countData) => {
+    if (countErr) {
+      console.error("Error executing count query:", countErr);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    const totalCount = countData[0].totalCount; // Extract the total row count
+
+    // Construct the main query to retrieve the paginated data
+    const mainQuery = category
+      ? `SELECT * FROM posts WHERE category=? LIMIT ${itemsPerPage} OFFSET ${offset}`
+      : `SELECT * FROM posts LIMIT ${itemsPerPage} OFFSET ${offset}`;
+
+    db.query(mainQuery, queryParams, (mainErr, data) => {
+      if (mainErr) {
+        console.error("Error executing main query:", mainErr);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+
+      return res.status(200).json({ data, totalCount }); // Return both data and totalCount
+    });
   });
 };
 

@@ -8,34 +8,18 @@ import Pagination from "../components/Pagination";
 const Home = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const category = searchParams.get("category");
+  useEffect(
+    function () {
+      searchParams.set("page", 1);
+      setSearchParams(searchParams);
+    },
+    [category]
+  );
+
   const { isLoading, Posts } = usePosts();
 
   if (isLoading) return <Spinner />;
-
-  const filterValue = searchParams.get("category") || "all";
-  let filteredPost;
-
-  if (filterValue === "all") {
-    filteredPost = Posts;
-  }
-  if (filterValue === "art") {
-    filteredPost = Posts.filter((post) => post.category === filterValue);
-  }
-  if (filterValue === "science") {
-    filteredPost = Posts.filter((post) => post.category === filterValue);
-  }
-  if (filterValue === "technology") {
-    filteredPost = Posts.filter((post) => post.category === filterValue);
-  }
-  if (filterValue === "cinema") {
-    filteredPost = Posts.filter((post) => post.category === filterValue);
-  }
-  if (filterValue === "design") {
-    filteredPost = Posts.filter((post) => post.category === filterValue);
-  }
-  if (filterValue === "food") {
-    filteredPost = Posts.filter((post) => post.category === filterValue);
-  }
 
   return (
     <div className="container">
@@ -43,7 +27,7 @@ const Home = () => {
         <h1 className="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent text-2xl font-bold">
           Latest blogs around the world
         </h1>
-        {filteredPost.map((post) => (
+        {Posts.map((post) => (
           <div className="flex flex-col gap-5 my-5 md:flex-row" key={post.id}>
             <div className="max-w-[600px]">
               <img src={`./upload/${post.img}`} alt="" className="rounded-sm" />

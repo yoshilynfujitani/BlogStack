@@ -10,7 +10,6 @@ import Spinner from "../components/Spinner";
 import { useDeletePost } from "./useDeletePost";
 
 const Single = () => {
-  const location = useLocation();
   const navigate = useNavigate();
 
   // const postId = location.pathname.split("/")[2];
@@ -21,7 +20,7 @@ const Single = () => {
   const { isLoading, post } = usePost();
   const { isDeleting, deletePost } = useDeletePost();
   if (isLoading) return <Spinner />;
-  console.log(post.id);
+  console.log(post);
 
   const handledelete = (id) => {
     deletePost(id);

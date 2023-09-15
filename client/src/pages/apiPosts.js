@@ -1,22 +1,20 @@
 import axios from "axios";
 
-export async function getPosts(page) {
+export async function getPosts({ page, category }) {
   let data;
 
   try {
-    const res = await axios.get(`http://localhost:5175/api/posts?page=${page}`);
+    const res = await axios.get(
+      `http://localhost:5175/api/posts?page=${page}${
+        category ? `&category=${category}` : ""
+      }`
+    );
     data = res.data;
   } catch (err) {
     console.log(err.response.data);
   }
 
   return data;
-
-  // }
-  // console.log(data);
-  // const filteredData = data.filter((post) => post.category === category);
-
-  // return filteredData;
 }
 
 export async function getPost(id) {
